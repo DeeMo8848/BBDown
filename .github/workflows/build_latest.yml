@@ -39,18 +39,15 @@ jobs:
   build-linux-x64:
     
     runs-on: ubuntu-latest
-    container: ubuntu:18.04
     
     steps:
       
-      - run: apt-get update
-      - run: apt-get install -y curl wget
       - uses: actions/checkout@v4
       - name: Set up dotnet
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_SDK_VERSION }}
-      - run: apt-get install -y libicu-dev libcurl4-openssl-dev zlib1g-dev libkrb5-dev
+      - run: sudo apt-get update && sudo apt-get install -y clang zlib1g-dev libicu-dev
       - run: dotnet publish BBDown -r linux-x64 -c Release -o artifact
       
       - name: Upload Artifact[linux-x64]
